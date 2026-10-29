@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+.DS_Store
+.idea/
+.vscode/
+build/
+dist/
+*.egg-info/
+logs/
+MUJOCO_LOG.TXT

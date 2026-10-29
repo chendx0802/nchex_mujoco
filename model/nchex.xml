@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="nchex">
+  <compiler angle="radian" meshdir="../meshes" autolimits="true" balanceinertia="true" discardvisual="false" fusestatic="false" />
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast" solver="Newton" iterations="80" />
+  <visual>
+    <headlight ambient="0.35 0.35 0.35" diffuse="0.75 0.75 0.75" specular="0.2 0.2 0.2" />
+    <global azimuth="135" elevation="-22" />
+  </visual>
+  <default>
+    <joint damping="0.001" armature="1e-6" />
+    <geom solref="0.01 1" solimp="0.9 0.95 0.001" />
+  </default>
+  <asset>
+    <texture name="sky" type="skybox" builtin="gradient" rgb1="0.35 0.45 0.60" rgb2="0.02 0.02 0.03" width="512" height="3072" />
+    <texture name="ground_tex" type="2d" builtin="checker" rgb1="0.28 0.30 0.32" rgb2="0.18 0.20 0.22" width="512" height="512" />
+    <material name="ground_mat" texture="ground_tex" texrepeat="8 8" reflectance="0.15" />
+    <mesh name="mesh_0_main_body_without_motor_pods" file="hexa_x_tilt/main_body_without_motor_pods.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_1_fixed_base2" file="delta/fixed_base2.obj" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_2_upper_leg" file="delta/upper_leg.STL" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_3_Platform" file="delta/Platform.STL" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_4_leg1_remeshed_v3" file="hexa_x_tilt/leg1_remeshed_v3.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_5_leg2_remeshed_v3" file="hexa_x_tilt/leg2_remeshed_v3.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_6_motor_0_pod" file="hexa_x_tilt/motor_0_pod.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_7_prop_ccw_assembly_remeshed_v3" file="hexa_x_tilt/prop_ccw_assembly_remeshed_v3.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_8_motor_1_pod" file="hexa_x_tilt/motor_1_pod.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_9_prop_cw_assembly_remeshed_v3" file="hexa_x_tilt/prop_cw_assembly_remeshed_v3.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_10_motor_2_pod" file="hexa_x_tilt/motor_2_pod.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_11_motor_3_pod" file="hexa_x_tilt/motor_3_pod.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_12_motor_4_pod" file="hexa_x_tilt/motor_4_pod.stl" scale="0.001 0.001 0.001" />
+    <mesh name="mesh_13_motor_5_pod" file="hexa_x_tilt/motor_5_pod.stl" scale="0.001 0.001 0.001" />
+  </asset>
+  <worldbody>
+    <light name="sun" pos="0 -2 4" dir="0 0 -1" directional="true" />
+    <geom name="floor" type="plane" size="4 4 0.1" material="ground_mat" friction="1.0 0.02 0.001" />
+    <body name="base_link" pos="0 0 0.62">
+      <freejoint name="base_freejoint" />
+      <inertial pos="0.001005 0 -0.0090035" mass="2.02" fullinertia="0.011 0.015 0.021 0 0 0" />
+      <geom pos="0 0 0" quat="1 0 0 0" name="base_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.72 0.74 0.78 1" type="mesh" mesh="mesh_0_main_body_without_motor_pods" />
+      <geom pos="0 0 0" quat="1 0 0 0" name="base_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="box" size="0.335 0.335 0.075" />
+      <site name="imu_site" pos="0 0 0" size="0.008" rgba="0 0.8 0 1" />
+      <body name="delta_mount_link" pos="0 0 -0.1" quat="1 0 0 0">
+        <inertial pos="0 0 0" mass="0.25" fullinertia="0.0001 0.0169 0.0169 0 0 0" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="delta_mount_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.95 0.35 0.05 1" type="box" size="0.45 0.0175 0.0175" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="delta_mount_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="box" size="0.45 0.0175 0.0175" />
+        <body name="counterweight_link" pos="-0.53 0 0" quat="1 0 0 0">
+          <inertial pos="0 0 0" mass="1.13" fullinertia="0.00362 0.00546 0.00546 0 0 0" />
+          <geom pos="0 0 0" quat="0.707106781188 0 0.707106781185 0" name="counterweight_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.92 0.66 0.08 1" type="cylinder" size="0.08 0.07" />
+          <geom pos="0 0 0" quat="0.707106781188 0 0.707106781185 0" name="counterweight_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.08 0.07" />
+        </body>
+        <body name="delta_link_0" pos="0.525 0 0" quat="0.707106781188 0 -0.707106781185 0">
+          <inertial pos="-0 -0 -0" mass="0.48" fullinertia="0.003604 0.003604 0.0072 0 0 0" />
+          <geom pos="-0.147 -0.085 -0.01" quat="1 0 0 0" name="delta_link_0_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="mesh" mesh="mesh_1_fixed_base2" />
+          <geom pos="-0 0 0.06" quat="1 0 0 0" name="delta_link_0_visual_1" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="box" size="0.025 0.025 0.06" />
+          <geom pos="-0.147 -0.085 -0.01" quat="1 0 0 0" name="delta_link_0_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="mesh" mesh="mesh_1_fixed_base2" />
+          <body name="delta_uleg_1" pos="0 -0.08585 0" quat="1 0 0 0">
+            <joint name="delta_motor1" type="hinge" pos="0 0 0" axis="1 0 0" range="-1.1 1.1" limited="true" />
+            <inertial pos="0 -0.071 0" mass="0.0466" fullinertia="0.000165041666667 1.94166666667e-05 0.000165041666667 0 0 7.1306575276e-16" />
+            <geom pos="0 0.029 0.028" quat="0.499999999998 -0.5 0.500000000002 -0.5" name="delta_uleg_1_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="mesh" mesh="mesh_2_upper_leg" />
+            <geom pos="0 0.029 0.025" quat="0.499999999998 -0.5 0.500000000002 -0.5" name="delta_uleg_1_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="mesh" mesh="mesh_2_upper_leg" />
+            <body name="delta_con1" pos="0 -0.2 0" quat="0.964435197932 0.264319407139 0 0">
+              <joint name="delta_uleg1_con" type="hinge" pos="0 0 0" axis="1 0 0" />
+              <inertial pos="0.005 0 0" mass="0.0173" fullinertia="1.15333333333e-08 3.60993333333e-06 3.60993333333e-06 0 -1.76198853543e-17 0" />
+              <geom pos="0.005 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con1_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.025" />
+              <geom pos="0.005 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con1_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.025" />
+              <body name="delta_lleg_12" pos="0.03 0 0" quat="1 0 0 0">
+                <joint name="delta_con2_lleg_1" type="hinge" pos="0 0 0" axis="0 1 0" />
+                <inertial pos="0 0 -0.255" mass="0.04" fullinertia="0.000867013333333 0.000867013333333 2.66666666667e-08 0 0 0" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_12_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.255" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_12_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.255" />
+                <body name="delta_con13" pos="0 0 -0.51" quat="1 0 0 0">
+                  <joint name="delta_con13_lleg_1" type="hinge" pos="0 0 0" axis="0 1 0" />
+                  <inertial pos="-0.025 0 0" mass="0.0173" fullinertia="1.15333333333e-08 3.60993333333e-06 3.60993333333e-06 0 -1.76198853543e-17 0" />
+                  <geom pos="-0.025 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con13_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.025" />
+                  <geom pos="-0.025 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con13_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.025" />
+                  <body name="delta_low_base" pos="0 0 0" quat="0.968912421711 -0.247403959255 0 0">
+                    <joint name="delta_lleg1_base" type="hinge" pos="0 0 0" axis="1 0 0" />
+                    <inertial pos="-0.03 0.03 0" mass="0.014" fullinertia="4.5e-06 4.5e-06 4.5e-06 0 0 0" />
+                    <geom pos="-0.07 -0.015 -0.012" quat="1 0 0 0" name="delta_low_base_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="mesh" mesh="mesh_3_Platform" />
+                  </body>
+                </body>
+              </body>
+              <body name="delta_lleg_1" pos="-0.02 0 0" quat="1 0 0 0">
+                <joint name="delta_con_lleg_1" type="hinge" pos="0 0 0" axis="0 1 0" />
+                <inertial pos="0 0 -0.255" mass="0.04" fullinertia="0.000867013333333 0.000867013333333 2.66666666667e-08 0 0 0" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_1_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.255" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_1_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.255" />
+              </body>
+            </body>
+          </body>
+          <body name="delta_uleg_2" pos="-0.075 0.047925 0" quat="0.500000000002 0 0 -0.866025403784">
+            <joint name="delta_motor2" type="hinge" pos="0 0 0" axis="1 0 0" range="-1.1 1.1" limited="true" />
+            <inertial pos="0 -0.071 0" mass="0.0466" fullinertia="0.000165041666667 1.94166666667e-05 0.000165041666667 0 0 7.1306575276e-16" />
+            <geom pos="0 0.029 0.028" quat="0.499999999998 -0.5 0.500000000002 -0.5" name="delta_uleg_2_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="mesh" mesh="mesh_2_upper_leg" />
+            <geom pos="0 0.029 0.025" quat="0.499999999998 -0.5 0.500000000002 -0.5" name="delta_uleg_2_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="mesh" mesh="mesh_2_upper_leg" />
+            <body name="delta_con2" pos="0 -0.2 0" quat="0.964435197932 0.264319407139 0 0">
+              <joint name="delta_uleg2_con" type="hinge" pos="0 0 0" axis="1 0 0" />
+              <inertial pos="0.005 0 0" mass="0.0173" fullinertia="1.15333333333e-08 3.60993333333e-06 3.60993333333e-06 0 -1.76198853543e-17 0" />
+              <geom pos="0.005 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con2_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.025" />
+              <geom pos="0.005 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con2_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.025" />
+              <body name="delta_lleg_22" pos="0.03 0 0" quat="1 0 0 0">
+                <joint name="delta_con2_lleg_2" type="hinge" pos="0 0 0" axis="0 1 0" />
+                <inertial pos="0 0 -0.255" mass="0.04" fullinertia="0.000867013333333 0.000867013333333 2.66666666667e-08 0 0 0" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_22_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.255" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_22_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.255" />
+                <body name="delta_con23" pos="0 0 -0.51" quat="1 0 0 0">
+                  <joint name="delta_con23_lleg_2" type="hinge" pos="0 0 0" axis="0 1 0" />
+                  <inertial pos="-0.025 0 0" mass="0.0173" fullinertia="1.15333333333e-08 3.60993333333e-06 3.60993333333e-06 0 -1.76198853543e-17 0" />
+                  <geom pos="-0.025 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con23_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.025" />
+                  <geom pos="-0.025 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con23_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.025" />
+                </body>
+              </body>
+              <body name="delta_lleg_2" pos="-0.02 0 0" quat="1 0 0 0">
+                <joint name="delta_con_lleg_2" type="hinge" pos="0 0 0" axis="0 1 0" />
+                <inertial pos="0 0 -0.255" mass="0.04" fullinertia="0.000867013333333 0.000867013333333 2.66666666667e-08 0 0 0" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_2_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.255" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_2_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.255" />
+              </body>
+            </body>
+          </body>
+          <body name="delta_uleg_3" pos="0.075 0.042925 0" quat="0.500000000001 0 0 0.866025403784">
+            <joint name="delta_motor3" type="hinge" pos="0 0 0" axis="1 0 0" range="-1.1 1.1" limited="true" />
+            <inertial pos="0 -0.071 0" mass="0.0466" fullinertia="0.000165041666667 1.94166666667e-05 0.000165041666667 0 0 7.1306575276e-16" />
+            <geom pos="0 0.029 0.028" quat="0.499999999998 -0.5 0.500000000002 -0.5" name="delta_uleg_3_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="mesh" mesh="mesh_2_upper_leg" />
+            <geom pos="0 0.029 0.025" quat="0.499999999998 -0.5 0.500000000002 -0.5" name="delta_uleg_3_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="mesh" mesh="mesh_2_upper_leg" />
+            <body name="delta_con3" pos="0 -0.2 0" quat="0.964435197932 0.264319407139 0 0">
+              <joint name="delta_uleg3_con" type="hinge" pos="0 0 0" axis="1 0 0" />
+              <inertial pos="0.005 0 0" mass="0.0173" fullinertia="1.15333333333e-08 3.60993333333e-06 3.60993333333e-06 0 -1.76198853543e-17 0" />
+              <geom pos="0.005 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con3_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.025" />
+              <geom pos="0.005 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con3_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.025" />
+              <body name="delta_lleg_32" pos="0.03 0 0" quat="1 0 0 0">
+                <joint name="delta_con2_lleg_3" type="hinge" pos="0 0 0" axis="0 1 0" />
+                <inertial pos="0 0 -0.255" mass="0.04" fullinertia="0.000867013333333 0.000867013333333 2.66666666667e-08 0 0 0" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_32_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.255" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_32_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.255" />
+                <body name="delta_con33" pos="0 0 -0.51" quat="1 0 0 0">
+                  <joint name="delta_con33_lleg_3" type="hinge" pos="0 0 0" axis="0 1 0" />
+                  <inertial pos="-0.025 0 0" mass="0.0173" fullinertia="1.15333333333e-08 3.60993333333e-06 3.60993333333e-06 0 -1.76198853543e-17 0" />
+                  <geom pos="-0.025 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con33_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.025" />
+                  <geom pos="-0.025 0 0" quat="0.707106781188 0 0.707106781185 0" name="delta_con33_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.025" />
+                </body>
+              </body>
+              <body name="delta_lleg_3" pos="-0.02 0 0" quat="1 0 0 0">
+                <joint name="delta_con_lleg_3" type="hinge" pos="0 0 0" axis="0 1 0" />
+                <inertial pos="0 0 -0.255" mass="0.04" fullinertia="0.000867013333333 0.000867013333333 2.66666666667e-08 0 0 0" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_3_visual_0" contype="0" conaffinity="0" group="2" rgba="0.82 0.08 0.06 1" type="cylinder" size="0.002 0.255" />
+                <geom pos="0 0 -0.255" quat="1 0 0 0" name="delta_lleg_3_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.002 0.255" />
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="landing_gear_link" pos="0 0 0" quat="1 0 0 0">
+        <inertial pos="0 0 -0.207252" mass="0.2" fullinertia="0.0061 0.002 0.0061 0 0 0" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="landing_gear_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.72 0.74 0.78 1" type="mesh" mesh="mesh_4_leg1_remeshed_v3" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="landing_gear_link_visual_1" contype="0" conaffinity="0" group="2" rgba="0.72 0.74 0.78 1" type="mesh" mesh="mesh_5_leg2_remeshed_v3" />
+        <geom pos="-0.005 -0.14314 -0.207252" quat="0.707766319385 0 0.706446627244 0" name="landing_gear_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.012209 0.15" />
+        <geom pos="0.00052 -0.08503 -0.121187" quat="0.968749172123 -0.248042418773 0 0" name="landing_gear_link_collision_1" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.00914984 0.0884465" />
+        <geom pos="-0.005 0.14314 -0.207252" quat="0.707766319385 0 0.706446627244 0" name="landing_gear_link_collision_2" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.012209 0.15" />
+        <geom pos="0.00052 0.08503 -0.121187" quat="0.968749172123 0.248042418773 0 0" name="landing_gear_link_collision_3" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.00914984 0.0884465" />
+      </body>
+      <body name="motor_0_link" pos="-0.209396 0.122762 0.049219" quat="0.801760378025 -0.190147796624 0.332100022351 0.459057389465">
+        <inertial pos="0 0 0" mass="0.001" fullinertia="1e-06 1e-06 1e-06 0 0 0" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_0_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.28 0.30 0.33 1" type="mesh" mesh="mesh_6_motor_0_pod" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_0_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.022 0.025" />
+        <site name="rotor_0_thrust_site" pos="0 0 0.033" quat="1 0 0 0" size="0.006" rgba="0 0.5 1 1" />
+        <body name="rotor_0_link" pos="0 0 0.033" quat="1 0 0 0">
+          <joint name="rotor_0_joint" type="hinge" pos="0 0 0" axis="0 0 1" damping="0.0001" frictionloss="0" />
+          <inertial pos="0 0 0" mass="0.005" fullinertia="9.75e-07 0.000273104 0.000274004 0 0 0" />
+          <geom pos="-0.211396 -0.119762 -0.082219" quat="1 0 0 0" name="rotor_0_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.85 0.85 0.88 1" type="mesh" mesh="mesh_7_prop_ccw_assembly_remeshed_v3" />
+          <geom pos="0 0 0" quat="1 0 0 0" name="rotor_0_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.115 0.003" />
+        </body>
+      </body>
+      <body name="motor_1_link" pos="0.211396 -0.119762 0.049219" quat="-0.461939766257 0.331413574035 0.191341716183 0.800103145191">
+        <inertial pos="0 0 0" mass="0.001" fullinertia="1e-06 1e-06 1e-06 0 0 0" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_1_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.28 0.30 0.33 1" type="mesh" mesh="mesh_8_motor_1_pod" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_1_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.022 0.025" />
+        <site name="rotor_1_thrust_site" pos="0 0 0.033" quat="1 0 0 0" size="0.006" rgba="0 0.5 1 1" />
+        <body name="rotor_1_link" pos="0 0 0.033" quat="1 0 0 0">
+          <joint name="rotor_1_joint" type="hinge" pos="0 0 0" axis="0 0 1" damping="0.0001" frictionloss="0" />
+          <inertial pos="0 0 0" mass="0.005" fullinertia="9.75e-07 0.000273104 0.000274004 0 0 0" />
+          <geom pos="0.00187896 -0.242705 -0.0822169" quat="1 0 0 0" name="rotor_1_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.85 0.85 0.88 1" type="mesh" mesh="mesh_9_prop_cw_assembly_remeshed_v3" />
+          <geom pos="0 0 0" quat="1 0 0 0" name="rotor_1_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.115 0.003" />
+        </body>
+      </body>
+      <body name="motor_2_link" pos="-0.209396 -0.122762 0.049219" quat="0.461939766257 0.331413574035 -0.191341716183 0.800103145191">
+        <inertial pos="0 0 0" mass="0.001" fullinertia="1e-06 1e-06 1e-06 0 0 0" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_2_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.28 0.30 0.33 1" type="mesh" mesh="mesh_10_motor_2_pod" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_2_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.022 0.025" />
+        <site name="rotor_2_thrust_site" pos="0 0 0.033" quat="1 0 0 0" size="0.006" rgba="0 0.5 1 1" />
+        <body name="rotor_2_link" pos="0 0 0.033" quat="1 0 0 0">
+          <joint name="rotor_2_joint" type="hinge" pos="0 0 0" axis="0 0 1" damping="0.0001" frictionloss="0" />
+          <inertial pos="0 0 0" mass="0.005" fullinertia="9.75e-07 0.000273104 0.000274004 0 0 0" />
+          <geom pos="0.00187896 -0.242705 -0.0822169" quat="1 0 0 0" name="rotor_2_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.85 0.85 0.88 1" type="mesh" mesh="mesh_9_prop_cw_assembly_remeshed_v3" />
+          <geom pos="0 0 0" quat="1 0 0 0" name="rotor_2_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.115 0.003" />
+        </body>
+      </body>
+      <body name="motor_3_link" pos="0.211396 0.119762 0.049219" quat="0.801760378025 0.190147796624 0.332100022351 -0.459057389465">
+        <inertial pos="0 0 0" mass="0.001" fullinertia="1e-06 1e-06 1e-06 0 0 0" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_3_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.28 0.30 0.33 1" type="mesh" mesh="mesh_11_motor_3_pod" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_3_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.022 0.025" />
+        <site name="rotor_3_thrust_site" pos="0 0 0.033" quat="1 0 0 0" size="0.006" rgba="0 0.5 1 1" />
+        <body name="rotor_3_link" pos="0 0 0.033" quat="1 0 0 0">
+          <joint name="rotor_3_joint" type="hinge" pos="0 0 0" axis="0 0 1" damping="0.0001" frictionloss="0" />
+          <inertial pos="0 0 0" mass="0.005" fullinertia="9.75e-07 0.000273104 0.000274004 0 0 0" />
+          <geom pos="-0.211396 -0.119762 -0.082219" quat="1 0 0 0" name="rotor_3_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.85 0.85 0.88 1" type="mesh" mesh="mesh_7_prop_ccw_assembly_remeshed_v3" />
+          <geom pos="0 0 0" quat="1 0 0 0" name="rotor_3_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.115 0.003" />
+        </body>
+      </body>
+      <body name="motor_4_link" pos="-0.00187896 0.242705 0.0492169" quat="0.923879532511 0 -0.382683432365 0">
+        <inertial pos="0 0 0" mass="0.001" fullinertia="1e-06 1e-06 1e-06 0 0 0" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_4_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.28 0.30 0.33 1" type="mesh" mesh="mesh_12_motor_4_pod" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_4_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.022 0.025" />
+        <site name="rotor_4_thrust_site" pos="0 0 0.033" quat="1 0 0 0" size="0.006" rgba="0 0.5 1 1" />
+        <body name="rotor_4_link" pos="0 0 0.033" quat="1 0 0 0">
+          <joint name="rotor_4_joint" type="hinge" pos="0 0 0" axis="0 0 1" damping="0.0001" frictionloss="0" />
+          <inertial pos="0 0 0" mass="0.005" fullinertia="9.75e-07 0.000273104 0.000274004 0 0 0" />
+          <geom pos="0.00187896 -0.242705 -0.0822169" quat="1 0 0 0" name="rotor_4_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.85 0.85 0.88 1" type="mesh" mesh="mesh_9_prop_cw_assembly_remeshed_v3" />
+          <geom pos="0 0 0" quat="1 0 0 0" name="rotor_4_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.115 0.003" />
+        </body>
+      </body>
+      <body name="motor_5_link" pos="-0.00187896 -0.242705 0.0492169" quat="-4.28003775964e-05 -0.382683431954 -1.77284968751e-05 0.92387953152">
+        <inertial pos="0 0 0" mass="0.001" fullinertia="1e-06 1e-06 1e-06 0 0 0" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_5_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.28 0.30 0.33 1" type="mesh" mesh="mesh_13_motor_5_pod" />
+        <geom pos="0 0 0" quat="1 0 0 0" name="motor_5_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.022 0.025" />
+        <site name="rotor_5_thrust_site" pos="0 0 0.033" quat="1 0 0 0" size="0.006" rgba="0 0.5 1 1" />
+        <body name="rotor_5_link" pos="0 0 0.033" quat="1 0 0 0">
+          <joint name="rotor_5_joint" type="hinge" pos="0 0 0" axis="0 0 1" damping="0.0001" frictionloss="0" />
+          <inertial pos="0 0 0" mass="0.005" fullinertia="9.75e-07 0.000273104 0.000274004 0 0 0" />
+          <geom pos="-0.211396 -0.119762 -0.082219" quat="1 0 0 0" name="rotor_5_link_visual_0" contype="0" conaffinity="0" group="2" rgba="0.85 0.85 0.88 1" type="mesh" mesh="mesh_7_prop_ccw_assembly_remeshed_v3" />
+          <geom pos="0 0 0" quat="1 0 0 0" name="rotor_5_link_collision_0" contype="1" conaffinity="1" group="3" rgba="0.2 0.4 0.8 0" friction="0.9 0.02 0.001" type="cylinder" size="0.115 0.003" />
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <contact>
+    <exclude body1="base_link" body2="landing_gear_link" />
+    <exclude body1="base_link" body2="delta_mount_link" />
+    <exclude body1="delta_mount_link" body2="counterweight_link" />
+    <exclude body1="base_link" body2="motor_0_link" />
+    <exclude body1="motor_0_link" body2="rotor_0_link" />
+    <exclude body1="base_link" body2="motor_1_link" />
+    <exclude body1="motor_1_link" body2="rotor_1_link" />
+    <exclude body1="base_link" body2="motor_2_link" />
+    <exclude body1="motor_2_link" body2="rotor_2_link" />
+    <exclude body1="base_link" body2="motor_3_link" />
+    <exclude body1="motor_3_link" body2="rotor_3_link" />
+    <exclude body1="base_link" body2="motor_4_link" />
+    <exclude body1="motor_4_link" body2="rotor_4_link" />
+    <exclude body1="base_link" body2="motor_5_link" />
+    <exclude body1="motor_5_link" body2="rotor_5_link" />
+    <exclude body1="delta_mount_link" body2="delta_link_0" />
+    <exclude body1="delta_link_0" body2="delta_uleg_1" />
+    <exclude body1="delta_link_0" body2="delta_uleg_2" />
+    <exclude body1="delta_link_0" body2="delta_uleg_3" />
+    <exclude body1="delta_uleg_1" body2="delta_con1" />
+    <exclude body1="delta_con1" body2="delta_lleg_1" />
+    <exclude body1="delta_con1" body2="delta_lleg_12" />
+    <exclude body1="delta_uleg_2" body2="delta_con2" />
+    <exclude body1="delta_con2" body2="delta_lleg_2" />
+    <exclude body1="delta_con2" body2="delta_lleg_22" />
+    <exclude body1="delta_uleg_3" body2="delta_con3" />
+    <exclude body1="delta_con3" body2="delta_lleg_3" />
+    <exclude body1="delta_con3" body2="delta_lleg_32" />
+    <exclude body1="delta_lleg_32" body2="delta_con33" />
+    <exclude body1="delta_lleg_22" body2="delta_con23" />
+    <exclude body1="delta_lleg_12" body2="delta_con13" />
+    <exclude body1="delta_con13" body2="delta_low_base" />
+    <exclude body1="base_link" body2="rotor_0_link" />
+    <exclude body1="base_link" body2="rotor_1_link" />
+    <exclude body1="base_link" body2="rotor_2_link" />
+    <exclude body1="base_link" body2="rotor_3_link" />
+    <exclude body1="base_link" body2="rotor_4_link" />
+    <exclude body1="base_link" body2="rotor_5_link" />
+  </contact>
+  <equality>
+    <connect name="delta_lleg2_base_constraint_0" body1="delta_low_base" body2="delta_con23" anchor="-0.0680234774807 0.0177573804181 -0.000621696915152" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_lleg2_base_constraint_1" body1="delta_low_base" body2="delta_con23" anchor="-0.0805234774806 -0.003879997799 0.000135841132286" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_lleg3_base_constraint_0" body1="delta_low_base" body2="delta_con33" anchor="-0.0219765225192 0.0646901496838 -0.00226484231076" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_lleg3_base_constraint_1" body1="delta_low_base" body2="delta_con33" anchor="-0.0344765225191 0.0863275279008 -0.0030223803582" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_con13_lleg_12_constraint_0" body1="delta_lleg_1" body2="delta_con13" anchor="0 -5.55111512313e-17 -0.51" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_con13_lleg_12_constraint_1" body1="delta_lleg_1" body2="delta_con13" anchor="0 0.025 -0.51" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_con23_lleg_22_constraint_0" body1="delta_lleg_2" body2="delta_con23" anchor="6.93889390391e-18 0 -0.51" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_con23_lleg_22_constraint_1" body1="delta_lleg_2" body2="delta_con23" anchor="6.93889390391e-18 0.025 -0.51" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_con33_lleg_32_constraint_0" body1="delta_lleg_3" body2="delta_con33" anchor="-4.85722573274e-17 0 -0.51" solref="0.004 1" solimp="0.95 0.99 0.001" />
+    <connect name="delta_con33_lleg_32_constraint_1" body1="delta_lleg_3" body2="delta_con33" anchor="-4.85722573274e-17 0.025 -0.51" solref="0.004 1" solimp="0.95 0.99 0.001" />
+  </equality>
+  <actuator>
+    <general name="rotor_0_thrust" site="rotor_0_thrust_site" gear="0 0 1 0 0 -0.06" ctrlrange="0 30" forcerange="0 30" />
+    <general name="rotor_1_thrust" site="rotor_1_thrust_site" gear="0 0 1 0 0 0.06" ctrlrange="0 30" forcerange="0 30" />
+    <general name="rotor_2_thrust" site="rotor_2_thrust_site" gear="0 0 1 0 0 0.06" ctrlrange="0 30" forcerange="0 30" />
+    <general name="rotor_3_thrust" site="rotor_3_thrust_site" gear="0 0 1 0 0 -0.06" ctrlrange="0 30" forcerange="0 30" />
+    <general name="rotor_4_thrust" site="rotor_4_thrust_site" gear="0 0 1 0 0 0.06" ctrlrange="0 30" forcerange="0 30" />
+    <general name="rotor_5_thrust" site="rotor_5_thrust_site" gear="0 0 1 0 0 -0.06" ctrlrange="0 30" forcerange="0 30" />
+    <position name="delta_motor1_position" joint="delta_motor1" kp="80" ctrlrange="-1.1 1.1" forcerange="-20 20" />
+    <position name="delta_motor2_position" joint="delta_motor2" kp="80" ctrlrange="-1.1 1.1" forcerange="-20 20" />
+    <position name="delta_motor3_position" joint="delta_motor3" kp="80" ctrlrange="-1.1 1.1" forcerange="-20 20" />
+  </actuator>
+  <sensor>
+    <framequat name="base_orientation" objtype="site" objname="imu_site" />
+    <gyro name="base_angular_velocity" site="imu_site" />
+    <accelerometer name="base_linear_acceleration" site="imu_site" />
+  </sensor>
+</mujoco>
